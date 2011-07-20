@@ -23,7 +23,7 @@ class CampsiteController {
 
   def save = {
     def campsiteInstance = new Campsite(params)
-    campsiteInstance = campsiteService.getGeolocationData(campsiteInstance)
+    campsiteInstance = campsiteService.setGeolocationData(campsiteInstance)
     if (campsiteInstance.save(flush: true)) {
       flash.message = "${message(code: 'default.created.message', args: [message(code: 'campsite.label', default: 'Campsite'), campsiteInstance.id])}"
       redirect(action: "show", id: campsiteInstance.id)

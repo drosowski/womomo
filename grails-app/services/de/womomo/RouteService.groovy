@@ -1,27 +1,32 @@
 package de.womomo
 
-class RouteService {
+import groovyx.net.http.HTTPBuilder
+import static groovyx.net.http.ContentType.JSON
+import static groovyx.net.http.Method.GET
 
-  def grailsApplication
+class RouteService {
 
   static transactional = true
 
-  def calculateRoute(RouteCommand routeCommand) {
-    def config = grailsApplication.config
+  def setCampsitesOnRoute(RouteCommand routeCommand) {
     if (routeCommand?.from && routeCommand?.to) {
       routeCommand.from = URLEncoder.encode(routeCommand.from, "UTF-8")
       routeCommand.to = URLEncoder.encode(routeCommand.to, "UTF-8")
-      def result = null
-      withHttp(uri: "http://maps.google.de", proxy: [host: config.proxy.host, port: config.proxy.port, scheme: "http"]) {
-        result = get(path: '/maps/api/directions/json', query:
-        [
+
+      def http = new HTTPBuilder("http://maps.google.de")
+      def proxyHost = System.getProperty("http.proxyHost")
+      def proxyPort = System.getProperty("http.proxyPort")
+      http.setProxy(proxyHost, proxyPort?.toInteger(), "http")
+      http.request(GET, JSON) {
+        uri.path = '/maps/api/directions/json'
+        uri.query = [
                 origin: routeCommand.from,
                 destination: routeCommand.to,
                 sensor: "false"
-        ])
-      }
-      if (result && result.status == "OK") {
-        result.routes.each { route ->
+        ]
+
+        response.success = { resp, json ->
+          def route = json.routes[0]
           if (route?.overview_polyline) {
             def points = PolylineDecoder.decodePoly(route.overview_polyline.points.toString())
             points.each { Location loc ->
@@ -29,6 +34,10 @@ class RouteService {
               routeCommand.campsites.addAll(campsites)
             }
           }
+        }
+
+        response.failure = { resp ->
+          log.error "Unexpected error: ${resp.status}: ${resp.statusLine.reasonPhrase}"
         }
       }
     }

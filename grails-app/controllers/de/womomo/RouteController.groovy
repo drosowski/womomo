@@ -16,7 +16,7 @@ class RouteController {
     def routeCommand = null
     if (params.from && params.to) {
       routeCommand = new RouteCommand(to: params.to, from: params.from, distance: params.distance.toDouble())
-      routeCommand = routeService.calculateRoute(routeCommand)
+      routeCommand = routeService.setCampsitesOnRoute(routeCommand)
     }
     render(view: "route", model: [routeCommand: routeCommand])
   }
