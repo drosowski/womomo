@@ -105,3 +105,7 @@ grails.gorm.default.mapping = {
 
 proxy.host = "10.1.1.50"
 proxy.port = "8080"
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'de.womomo.UserAccount'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'de.womomo.UserAccountRole'
+grails.plugins.springsecurity.authority.className = 'de.womomo.Role'

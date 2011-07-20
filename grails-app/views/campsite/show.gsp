@@ -64,6 +64,31 @@
         <td valign="top" class="value">${fieldValue(bean: campsiteInstance, field: "name")}</td>
       </tr>
 
+      <div id="comments">
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="campsite.comments.label" default="Comments"/></td>
+          <td valign="top" class="value">
+            <table>
+              <comments:each bean="${campsiteInstance}">
+                <tr>
+                  <td valign="top" class="name">${comment.poster}</td>
+                  <td valign="top" class="value">${comment.body}</td>
+                </tr>
+              </comments:each>
+            </table>
+          </td>
+        </tr>
+
+        <tr class="prop">
+          <td valign="top" class="name">
+            <label for="comment"><g:message code="campsite.newComment.label" default="New comment"/></label>
+          </td>
+          <td valign="top" class="value">
+            <g:textField name="comment"/>
+          </td>
+        </tr>        
+      </div>
+
       </tbody>
     </table>
   </div>
