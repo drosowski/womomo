@@ -7,7 +7,7 @@ class UrlMappings {
 			}
 		}
 
-		"/"(view:"/index")
+		"/"(controller: "campsite", action:"overview")
 		"500"(view:'/error')
 	}
 }
