@@ -79,14 +79,20 @@
           </td>
         </tr>
 
-        <tr class="prop">
-          <td valign="top" class="name">
-            <label for="comment"><g:message code="campsite.newComment.label" default="New comment"/></label>
-          </td>
-          <td valign="top" class="value">
-            <g:textField name="comment"/>
-          </td>
-        </tr>        
+        <sec:ifLoggedIn>
+          <g:form>
+            <g:hiddenField name="id" value="${campsiteInstance?.id}"/>
+            <tr class="prop">
+              <td valign="top" class="name">
+                <label for="comment"><g:message code="campsite.newComment.label" default="New comment"/></label>
+              </td>
+              <td valign="top" class="value">
+                <g:textArea name="comment"/><br/>
+                <span class="button"><g:actionSubmit action="addComment" value="${message(code: 'button.addComment.label', default: 'Add comment')}"/></span>
+              </td>
+            </tr>
+          </g:form>
+        </sec:ifLoggedIn>
       </div>
 
       </tbody>

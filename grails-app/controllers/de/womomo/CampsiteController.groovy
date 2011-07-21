@@ -3,6 +3,7 @@ package de.womomo
 class CampsiteController {
 
   def campsiteService
+  def springSecurityService
 
   static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -93,6 +94,26 @@ class CampsiteController {
       catch (org.springframework.dao.DataIntegrityViolationException e) {
         flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'campsite.label', default: 'Campsite'), params.id])}"
         redirect(action: "show", id: params.id)
+      }
+    }
+    else {
+      flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'campsite.label', default: 'Campsite'), params.id])}"
+      redirect(action: "list")
+    }
+  }
+
+  def addComment = {
+    def campsiteInstance = Campsite.get(params.id)
+    if (campsiteInstance) {
+      def user = springSecurityService.currentUser
+      campsiteInstance.addComment(user, params.comment)
+      if (campsiteInstance.save(flush: true)) {
+        flash.message = "${message(code: 'campsite.comment.created')}"
+        redirect(action: "show", id: campsiteInstance.id)
+      }
+      else {
+        flash.message = "${message(code: 'campsite.comment.error')}"
+        redirect(view: "show", id: params.id)
       }
     }
     else {
