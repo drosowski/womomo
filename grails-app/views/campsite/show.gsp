@@ -45,8 +45,28 @@
       </tr>
 
       <tr class="prop">
+        <td valign="top" class="name"><g:message code="campsite.name.label" default="Name"/></td>
+        <td valign="top" class="value">${fieldValue(bean: campsiteInstance, field: "name")}</td>
+      </tr>
+
+      <tr class="prop">
         <td valign="top" class="name"><g:message code="campsite.address.label" default="Address"/></td>
         <td valign="top" class="value">${fieldValue(bean: campsiteInstance, field: "address")}</td>
+      </tr>
+
+      <tr class="prop">
+        <td valign="top" class="name"><g:message code="campsite.country.label" default="Country"/></td>
+        <td valign="top" class="value">${fieldValue(bean: campsiteInstance, field: "country")}</td>
+      </tr>
+
+      <tr class="prop">
+        <td valign="top" class="name"><g:message code="campsite.region.label" default="Region"/></td>
+        <td valign="top" class="value">${fieldValue(bean: campsiteInstance, field: "region")}</td>
+      </tr>
+
+      <tr class="prop">
+        <td valign="top" class="name"><g:message code="campsite.city.label" default="City"/></td>
+        <td valign="top" class="value">${fieldValue(bean: campsiteInstance, field: "city")}</td>
       </tr>
 
       <tr class="prop">
@@ -59,11 +79,6 @@
         <td valign="top" class="value">${fieldValue(bean: campsiteInstance, field: "longitude")}</td>
       </tr>
 
-      <tr class="prop">
-        <td valign="top" class="name"><g:message code="campsite.name.label" default="Name"/></td>
-        <td valign="top" class="value">${fieldValue(bean: campsiteInstance, field: "name")}</td>
-      </tr>
-
       <div id="comments">
         <tr class="prop">
           <td valign="top" class="name"><g:message code="campsite.comments.label" default="Comments"/></td>
@@ -71,8 +86,8 @@
             <table>
               <comments:each bean="${campsiteInstance}">
                 <tr>
-                  <td valign="top" class="name">${comment.poster}</td>
-                  <td valign="top" class="value">${comment.body}</td>
+                  <td valign="top" class="name">${comment.poster.username}</td>
+                  <td valign="top" class="value"><g:textArea name="comment" value="${comment.body}" disabled="disabled"/></td>
                 </tr>
               </comments:each>
             </table>

@@ -32,10 +32,6 @@
       var markerCluster = new MarkerClusterer(map, markers);
     }
 
-    function onClick() {
-
-    }
-
     $(document).ready(initMap);
   </script>
 </head>
