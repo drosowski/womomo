@@ -8,7 +8,48 @@ class CampsiteController {
   static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
   def index = {
-    redirect(action: "list", params: params)
+    redirect(action: "overview", params: params)
+  }
+
+  def overview = {
+    def campsites = Campsite.list()
+
+    def regions = [] as Set
+    def countries = [] as Set
+    campsites.each {
+      if (it.country)
+        countries.add(it.country)
+    }
+
+    if (params.country) {
+      campsites = campsites.findAll { it.country == params.country }
+      regions = getRegionsForCountry(params.country)
+    }
+    if (params.region) {
+      campsites = campsites.findAll { it.region == params.region }
+    }
+    if (params.query) {
+      def searchResult = Campsite.search(params.query)
+      campsites = searchResult.results
+    }
+    render(view: "overview", model: [campsites: campsites, countries: countries, search: [country: params.country, region: params.region]])
+  }
+
+  def updateRegions = {
+    if (params.country) {
+      def regions = getRegionsForCountry(params.country)
+      render(template: "regionSelect", model: [regions: regions])
+    }
+  }
+
+  private Set getRegionsForCountry(String country) {
+    def campsites = Campsite.findAllByCountry(params.country)
+    def regions = [] as Set
+    campsites.each {
+      if (it.region)
+        regions.add(it.region)
+    }
+    return regions
   }
 
   def list = {
