@@ -1,3 +1,5 @@
+package de.womomo
+
 import grails.converters.JSON
 
 import javax.servlet.http.HttpServletResponse
@@ -11,6 +13,7 @@ import org.springframework.security.authentication.LockedException
 import org.springframework.security.core.context.SecurityContextHolder as SCH
 import org.springframework.security.web.WebAttributes
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.core.context.SecurityContextHolder
 
 class LoginController {
 
@@ -55,7 +58,7 @@ class LoginController {
 	}
 
 	/**
-	 * The redirect action for Ajax requests. 
+	 * The redirect action for Ajax requests.
 	 */
 	def authAjax = {
 		response.setHeader 'Location', SpringSecurityUtils.securityConfig.auth.ajaxLoginFormUrl
@@ -67,7 +70,7 @@ class LoginController {
 	 */
 	def denied = {
 		if (springSecurityService.isLoggedIn() &&
-				authenticationTrustResolver.isRememberMe(SCH.context?.authentication)) {
+				authenticationTrustResolver.isRememberMe(SecurityContextHolder.context?.authentication)) {
 			// have cookie but the page is guarded with IS_AUTHENTICATED_FULLY
 			redirect action: full, params: params
 		}
@@ -79,7 +82,7 @@ class LoginController {
 	def full = {
 		def config = SpringSecurityUtils.securityConfig
 		render view: 'auth', params: params,
-			model: [hasCookie: authenticationTrustResolver.isRememberMe(SCH.context?.authentication),
+			model: [hasCookie: authenticationTrustResolver.isRememberMe(SecurityContextHolder.context?.authentication),
 			        postUrl: "${request.contextPath}${config.apf.filterProcessesUrl}"]
 	}
 
