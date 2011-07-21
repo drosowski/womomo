@@ -26,6 +26,7 @@ grails.project.dependency.resolution = {
   plugins {
     runtime ':spring-security-core:1.1.3'
     runtime ':commentable:0.7.5'
+    runtime ':searchable:0.6.1'
   }
   dependencies {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.

@@ -11,6 +11,7 @@ class Campsite implements Commentable {
   String region
   Double latitude
   Double longitude
+  boolean closed = false
 
   static constraints = {
     name(blank: false, unique: true)
@@ -21,4 +22,6 @@ class Campsite implements Commentable {
     latitude(nullable: true)
     longitude(nullable: true)
   }
+
+  //static searchable = true
 }
