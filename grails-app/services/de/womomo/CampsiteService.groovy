@@ -32,6 +32,9 @@ class CampsiteService {
             if (it.types.contains("administrative_area_level_1")) {
               campsite.region = it.long_name
             }
+            if (it.types.contains("locality")) {
+              campsite.city = it.long_name
+            }
           }
         }
 
