@@ -15,24 +15,18 @@ class CampsiteController {
     def campsites = Campsite.list()
 
     def regions = [] as Set
-    def countries = [] as Set
-    campsites.each {
-      if (it.country)
-        countries.add(it.country)
-    }
+    def countries = getCountries(campsites)
+
 
     if (params.country) {
       campsites = campsites.findAll { it.country == params.country }
       regions = getRegionsForCountry(params.country)
     }
-    if (params.region) {
+    if (params.region && regions.contains(params.region)) {
       campsites = campsites.findAll { it.region == params.region }
     }
-    if (params.query) {
-      def searchResult = Campsite.search(params.query)
-      campsites = searchResult.results
-    }
-    render(view: "overview", model: [campsites: campsites, countries: countries, regions: regions, search: [country: params.country, region: params.region]])
+
+    render(view: "overview", model: [campsites: campsites, countries: countries, regions: regions, filter: [country: params.country, region: params.region]])
   }
 
   def updateRegions = {
@@ -40,6 +34,15 @@ class CampsiteController {
       def regions = getRegionsForCountry(params.country)
       render(template: "regionSelect", model: [regions: regions])
     }
+  }
+
+  private Set getCountries(campsites) {
+    def countries = [] as Set
+    campsites.each {
+      if (it.country)
+        countries.add(it.country)
+    }
+    return countries
   }
 
   private Set getRegionsForCountry(String country) {
@@ -50,6 +53,28 @@ class CampsiteController {
         regions.add(it.region)
     }
     return regions
+  }
+
+  def search = {
+    if (params.query || params.periphery) {
+      def nearbyCampsites = []
+      if (params.periphery) {
+        def campsite = new Campsite(address: params.periphery)
+        campsite = campsiteService.setGeolocationData(campsite)
+        nearbyCampsites = campsiteService.getNearbyCampsites(new Location(campsite.latitude, campsite.longitude), params.radius.toDouble())
+      }
+      if (params.query) {
+        def searchResult = Campsite.search(params.query)
+        campsites = searchResult.results
+        if (nearbyCampsites) {
+          nearbyCampsites = nearbyCampsites.intersect(campsites)
+        }
+      }
+      render(view: 'overview', model: [campsites: nearbyCampsites, countries: getCountries(Campsite.list())])
+    }
+    else {
+      render(action: "overview", model: [countries: getCountries(Campsite.list())])
+    }
   }
 
   def list = {

@@ -9,9 +9,7 @@
 <body>
 <div class="body">
 
-  <div class="span-24">
-    <h1><g:message code="default.create.label" args="[entityName]"/></h1>
-  </div>
+  <h1><g:message code="default.create.label" args="[entityName]"/></h1>
 
   <div class="span-24">
     <g:if test="${flash.message}">

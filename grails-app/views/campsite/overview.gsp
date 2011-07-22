@@ -38,33 +38,63 @@
 <body>
 <div class="body">
 
-  <div class="span-24">
-    <h1><g:message code="campsite.overview.label"/></h1>
-  </div>
+  <h1><g:message code="campsite.overview.label"/></h1>
 
   <div class="span-10">
-    <g:form action="overview">
+    <g:form name="filter" action="overview">
       <fieldset>
-        <legend><g:message code="campsite.search.form.label" default="Search for a site"/></legend>
+        <legend><g:message code="campsite.filter.form.label" default="Filter display"/></legend>
 
         <p>
-          <label for="country"><g:message code="campsite.country.label" default="Country"/></label><br/>
-          <select name="country" id="country" onchange="${remoteFunction(action: 'updateRegions', update: 'regionSelect', params: '\'country=\' + this.value')}">
+          <label for="country"><g:message code="campsite.filter.country.label" default="Country"/></label><br/>
+          <select name="country" id="country" onchange="document.forms['filter'].submit();">
             <option value=""><g:message code="campsite.country.all" default="All"/></option>
             <g:each var="country" in="${countries}">
-              <option <g:if test="${search.country == country}">selected="selected"</g:if>>${country}</option>
+              <option <g:if test="${filter?.country == country}">selected="selected"</g:if>>${country}</option>
             </g:each>
           </select>
         </p>
 
         <p>
-          <label for="region"><g:message code="campsite.region.label" default="Region"/></label><br/>
+          <label for="region"><g:message code="campsite.filter.region.label" default="Region"/></label><br/>
           <span id="regionSelect"><g:render template="regionSelect"/></span>
+        </p>
+      </fieldset>
+    </g:form>
+
+    <g:form action="search">
+      <fieldset>
+        <legend><g:message code="campsite.search.form.label" default="Search"/></legend>
+
+        <p>
+          <label for="query"><g:message code="campsite.search.query.label" default="Query"/></label><br/>
+          <g:textField name="query" value="${search?.query}" class="text"/>
         </p>
 
         <p>
-          <label for="query"><g:message code="campsite.query.label" default="Query"/></label><br/>
-          <g:textField name="query" value="${search.query}" class="text"/>
+          <label for="periphery"><g:message code="campsite.search.periphery.label" default="Periphery of"/></label><br/>
+          <g:textField name="periphery" value="${search?.radius}" class="text"/>
+        </p>
+
+        <p>
+          <label for="radius"><g:message code="campsite.search.radius.label" default="Radius"/></label><br/>
+          <select name="radius" id="radius">
+            <option>5</option>
+            <option>10</option>
+            <option>15</option>
+            <option>20</option>
+            <option>25</option>
+            <option>30</option>
+            <option>35</option>
+            <option>40</option>
+            <option>45</option>
+            <option>50</option>
+            <option>60</option>
+            <option>70</option>
+            <option>80</option>
+            <option>90</option>
+            <option>100</option>
+          </select> km
         </p>
 
         <span class="button"><g:submitButton name="search" class="search" value="${message(code: 'button.search.label', default: 'Search')}"/></span>

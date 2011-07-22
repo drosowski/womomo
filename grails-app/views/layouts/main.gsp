@@ -14,11 +14,17 @@
 </head>
 <body>
 <div class="container">
-  <div id="grailsLogo"><a href="http://grails.org"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails" border="0"/></a></div>
+
+  <div class="span-24">
+    <div id="grailsLogo"><a href="http://grails.org"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails" border="0"/></a></div>
+  </div>
+
   <g:layoutBody/>
+
   <div class="span-24">
     womomo.de
   </div>
+
 </div>
 </body>
 </html>

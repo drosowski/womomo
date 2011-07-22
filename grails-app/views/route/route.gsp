@@ -32,11 +32,14 @@
       });
 
       var marker;
-    <g:each var="campsite" in="${routeCommand.campsites}">
+    <g:each var="site" in="${routeCommand.campsites}">
       marker = new google.maps.Marker({
-        position: new google.maps.LatLng(${campsite.latitude}, ${campsite.longitude}),
+        position: new google.maps.LatLng(${site.latitude}, ${site.longitude}),
         map: map,
-        title:"${campsite.name}"
+        title:"${site.name}"
+      });
+      google.maps.event.addListener(marker, 'click', function(event) {
+        document.location.href = '${createLink(controller: 'campsite', action: "show", id: site.id)}';
       });
     </g:each>
     </g:if>
@@ -46,71 +49,55 @@
 
 </head>
 <body>
-<div class="nav">
-  <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-  <span class="menuButton"><g:link class="list" controller="campsite" action="list"><g:message code="default.list.label" args="['Stellplätze']"/></g:link></span>
-</div>
 <div class="body">
+
   <h1><g:message code="route.calculate.label"/></h1>
-  <g:if test="${flash.message}">
-    <div class="message">${flash.message}</div>
-  </g:if>
-  <g:form action="calculateRoute">
-    <div class="dialog">
-      <table>
-        <tbody>
 
-        <tr class="prop">
-          <td valign="top" class="name">
-            <label for="from"><g:message code="route.from.label"/></label>
-          </td>
-          <td valign="top" class="value">
-            <g:textField name="from"/>
-          </td>
-        </tr>
+  <div class="span-10">
+    <g:if test="${flash.message}">
+      <div class="message">${flash.message}</div>
+    </g:if>
+    <g:form action="calculateRoute">
+      <fieldset>
+        <p>
+          <label for="from"><g:message code="route.from.label"/></label><br/>
+          <g:textField name="from" class="text"/>
+        </p>
 
-        <tr class="prop">
-          <td valign="top" class="name">
-            <label for="to"><g:message code="route.to.label"/></label>
-          </td>
-          <td valign="top" class="value">
-            <g:textField name="to"/>
-          </td>
-        </tr>
+        <p>
+          <label for="to"><g:message code="route.to.label"/></label><br/>
+          <g:textField name="to" class="text"/>
+        </p>
 
-        <tr class="prop">
-          <td valign="top" class="name">
-            <label for="to"><g:message code="route.distance.label"/></label>
-          </td>
-          <td valign="top" class="value">
-            <select name="distance" id="distance">
-              <option>5</option>
-              <option>10</option>
-              <option>15</option>
-              <option>20</option>
-              <option>25</option>
-              <option>30</option>
-              <option>35</option>
-              <option>40</option>
-              <option>45</option>
-              <option>50</option>
-              <option>60</option>
-              <option>70</option>
-              <option>80</option>
-              <option>90</option>
-              <option>100</option>
-            </select> km
-          </td>
-        </tr>
+        <p>
+          <label for="radius"><g:message code="route.radius.label"/></label><br/>
+          <select name="radius" id="radius">
+            <option>5</option>
+            <option>10</option>
+            <option>15</option>
+            <option>20</option>
+            <option>25</option>
+            <option>30</option>
+            <option>35</option>
+            <option>40</option>
+            <option>45</option>
+            <option>50</option>
+            <option>60</option>
+            <option>70</option>
+            <option>80</option>
+            <option>90</option>
+            <option>100</option>
+          </select> km
+        </p>
 
-        </tbody>
-      </table>
-    </div>
-    <div class="buttons">
-      <span class="button"><g:submitButton name="calculate" class="save" value="${message(code: 'route.button.calculate.label', default: 'Calculate')}"/></span>
-    </div>
-  </g:form>
-  <div id="map" style="width: 500px; height: 300px"></div>>
+        <span class="button"><g:submitButton name="calculate" class="save" value="${message(code: 'route.button.calculate.label', default: 'Calculate')}"/></span>
+      </fieldset>
+    </g:form>
+  </div>
+
+  <div class="span-14 last">
+    <div id="map" style="width: 500px; height: 300px"></div>
+  </div>
 </div>
 </body>
 </html>
