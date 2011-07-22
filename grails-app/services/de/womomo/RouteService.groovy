@@ -16,7 +16,10 @@ class RouteService {
       def http = new HTTPBuilder("http://maps.google.de")
       def proxyHost = System.getProperty("http.proxyHost")
       def proxyPort = System.getProperty("http.proxyPort")
-      http.setProxy(proxyHost, proxyPort?.toInteger(), "http")
+      if (proxyHost) {
+        http.setProxy(proxyHost, proxyPort?.toInteger(), "http")
+      }
+
       http.request(GET, JSON) {
         uri.path = '/maps/api/directions/json'
         uri.query = [
