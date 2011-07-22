@@ -32,7 +32,7 @@ class CampsiteController {
       def searchResult = Campsite.search(params.query)
       campsites = searchResult.results
     }
-    render(view: "overview", model: [campsites: campsites, countries: countries, search: [country: params.country, region: params.region]])
+    render(view: "overview", model: [campsites: campsites, countries: countries, regions: regions, search: [country: params.country, region: params.region]])
   }
 
   def updateRegions = {

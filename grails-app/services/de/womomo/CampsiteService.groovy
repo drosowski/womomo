@@ -9,9 +9,11 @@ class CampsiteService {
   static transactional = false
 
   def setGeolocationData(Campsite campsite) {
-    if (campsite?.address) {
-      def encodedAddress = URLEncoder.encode(campsite.address, "UTF-8")
-      def result = null
+    if (campsiteProvidesInputData(campsite)) {
+      def encodedAddress
+      if (campsite.address) {
+        encodedAddress = URLEncoder.encode(campsite.address, "UTF-8")
+      }
 
       def http = new HTTPBuilder("http://maps.google.de")
       def proxyHost = System.getProperty("http.proxyHost")
@@ -22,7 +24,12 @@ class CampsiteService {
 
       http.request(GET, JSON) {
         uri.path = '/maps/api/geocode/json'
-        uri.query = [address: encodedAddress, sensor: "false"]
+        if (encodedAddress) {
+          uri.query = [address: encodedAddress, sensor: "false"]
+        }
+        else {
+          uri.query = [latlng: campsite.latitude + "," + campsite.longitude, sensor: "false"]
+        }
 
         response.success = { resp, json ->
           campsite.latitude = json.results.geometry.location.lat[0]
@@ -48,5 +55,9 @@ class CampsiteService {
     }
 
     return campsite
+  }
+
+  private boolean campsiteProvidesInputData(Campsite campsite) {
+    return campsite && (campsite?.address || (campsite.latitude && campsite.longitude))
   }
 }
