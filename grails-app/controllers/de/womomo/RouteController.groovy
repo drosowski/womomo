@@ -15,7 +15,7 @@ class RouteController {
   def calculateRoute = {
     def routeCommand = null
     if (params.from && params.to) {
-      routeCommand = new RouteCommand(to: params.to, from: params.from, distance: params.distance.toDouble())
+      routeCommand = new RouteCommand(to: params.to, from: params.from, radius: params.radius.toDouble())
       routeCommand = routeService.setCampsitesOnRoute(routeCommand)
     }
     render(view: "route", model: [routeCommand: routeCommand])
@@ -25,6 +25,6 @@ class RouteController {
 class RouteCommand {
   String from
   String to
-  Double distance
+  Double radius
   Set campsites = new HashSet()
 }
