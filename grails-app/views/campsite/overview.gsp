@@ -41,27 +41,6 @@
   <h1><g:message code="campsite.overview.label"/></h1>
 
   <div class="span-10">
-    <g:form name="filter" action="overview">
-      <fieldset>
-        <legend><g:message code="campsite.filter.form.label" default="Filter display"/></legend>
-
-        <p>
-          <label for="country"><g:message code="campsite.filter.country.label" default="Country"/></label><br/>
-          <select name="country" id="country" onchange="document.forms['filter'].submit();">
-            <option value=""><g:message code="campsite.country.all" default="All"/></option>
-            <g:each var="country" in="${countries}">
-              <option <g:if test="${filter?.country == country}">selected="selected"</g:if>>${country}</option>
-            </g:each>
-          </select>
-        </p>
-
-        <p>
-          <label for="region"><g:message code="campsite.filter.region.label" default="Region"/></label><br/>
-          <span id="regionSelect"><g:render template="regionSelect"/></span>
-        </p>
-      </fieldset>
-    </g:form>
-
     <g:form action="search">
       <fieldset>
         <legend><g:message code="campsite.search.form.label" default="Search"/></legend>
@@ -103,7 +82,28 @@
   </div>
 
   <div class="span-14 last">
-    <div id="map" style="width: 500px; height: 300px"></div>
+    <div id="map" style="width: 550px; height: 350px"></div>
+
+    <g:form name="filter" action="overview">
+      <fieldset>
+        <legend><g:message code="campsite.filter.form.label" default="Filter display"/></legend>
+
+        <p>
+          <label for="country"><g:message code="campsite.filter.country.label" default="Country"/></label><br/>
+          <select name="country" id="country" onchange="document.forms['filter'].submit();">
+            <option value=""><g:message code="campsite.country.all" default="All"/></option>
+            <g:each var="country" in="${countries}">
+              <option <g:if test="${filter?.country == country}">selected="selected"</g:if>>${country}</option>
+            </g:each>
+          </select>
+        </p>
+
+        <p>
+          <label for="region"><g:message code="campsite.filter.region.label" default="Region"/></label><br/>
+          <span id="regionSelect"><g:render template="regionSelect"/></span>
+        </p>
+      </fieldset>
+    </g:form>
   </div>
 
 </div>

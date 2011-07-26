@@ -1,0 +1,34 @@
+body {
+    background: none repeat scroll 0 0 #F1F1F1;
+}
+
+.container {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #BDBDBD;
+    padding: 10px 10px 10px 10px;
+}
+
+#head {
+    border-bottom: 2px solid #BDBDBD;
+}
+
+.body {
+    margin-top: 20px;
+}
+
+.heading {
+    padding: 10px 0 0 0;
+    font-size: 48px;
+    color: #BDBDBD;
+    margin-bottom: 5px;
+}
+
+.subheading {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    padding-left: 10px;
+}
+
+h1 {
+    padding-top: 100px;
+    font-size: 24px;
+}
