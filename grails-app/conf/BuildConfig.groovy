@@ -27,6 +27,9 @@ grails.project.dependency.resolution = {
     runtime ':spring-security-core:1.1.3'
     runtime ':commentable:0.7.5'
     runtime ':searchable:0.6.1'
+    runtime ':excel-import:0.3'
+    runtime ':joda-time:1.2'
+    runtime ':jquery:1.6.1.1'
   }
   dependencies {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
