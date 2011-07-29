@@ -49,55 +49,49 @@
 
 </head>
 <body>
-<div class="body">
+<content tag="sidebar"></content>
+
+<content tag="body">
 
   <h1><g:message code="route.calculate.label"/></h1>
 
-  <div class="span-10">
-    <g:if test="${flash.message}">
-      <div class="message">${flash.message}</div>
-    </g:if>
-    <g:form action="calculateRoute">
-      <fieldset>
-        <p>
-          <label for="from"><g:message code="route.from.label"/></label><br/>
-          <g:textField name="from" class="text"/>
-        </p>
+  <g:if test="${flash.message}">
+    <div class="message">${flash.message}</div>
+  </g:if>
 
-        <p>
-          <label for="to"><g:message code="route.to.label"/></label><br/>
-          <g:textField name="to" class="text"/>
-        </p>
+  <g:form action="calculateRoute">
+    <div class="form_settings">
 
-        <p>
-          <label for="radius"><g:message code="route.radius.label"/></label><br/>
-          <select name="radius" id="radius">
-            <option>5</option>
-            <option>10</option>
-            <option>15</option>
-            <option>20</option>
-            <option>25</option>
-            <option>30</option>
-            <option>35</option>
-            <option>40</option>
-            <option>45</option>
-            <option>50</option>
-            <option>60</option>
-            <option>70</option>
-            <option>80</option>
-            <option>90</option>
-            <option>100</option>
-          </select> km
-        </p>
+      <p><span><g:message code="route.from.label"/></span><g:textField name="from" class="text"/></p>
 
-        <span class="button"><g:submitButton name="calculate" class="save" value="${message(code: 'route.button.calculate.label', default: 'Calculate')}"/></span>
-      </fieldset>
-    </g:form>
-  </div>
+      <p><span><g:message code="route.to.label"/></span><g:textField name="to" class="text"/></p>
 
-  <div class="span-14 last">
-    <div id="map" style="width: 500px; height: 300px"></div>
-  </div>
-</div>
+      <p><span><g:message code="route.radius.label"/></span>
+        <select name="radius" id="radius">
+          <option>5</option>
+          <option>10</option>
+          <option>15</option>
+          <option>20</option>
+          <option>25</option>
+          <option>30</option>
+          <option>35</option>
+          <option>40</option>
+          <option>45</option>
+          <option>50</option>
+          <option>60</option>
+          <option>70</option>
+          <option>80</option>
+          <option>90</option>
+          <option>100</option>
+        </select> km
+      </p>
+
+      <p class="buttons"><g:submitButton name="calculate" class="submit" value="${message(code: 'route.button.calculate.label', default: 'Calculate')}"/></p>
+    </div>
+  </g:form>
+  <br/>
+
+  <div id="map" style="width: 500px; height: 300px"></div>
+</content>
 </body>
 </html>

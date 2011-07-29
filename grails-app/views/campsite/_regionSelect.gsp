@@ -1,3 +1,4 @@
+<span><g:message code="campsite.filter.region.label" default="Region"/></span>
 <select name="region" id="region" onchange="document.forms['filter'].submit();">
   <option value="">---</option>
   <g:each var="region" in="${regions}">

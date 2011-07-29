@@ -7,47 +7,36 @@
   <title><g:message code="default.create.label" args="[entityName]"/></title>
 </head>
 <body>
-<div class="body">
+<content tag="sidebar"></content>
+
+<content tag="body">
 
   <h1><g:message code="default.create.label" args="[entityName]"/></h1>
 
-  <div class="span-24">
-    <g:if test="${flash.message}">
-      <div class="success">${flash.message}</div>
-    </g:if>
-    <g:hasErrors bean="${campsiteInstance}">
-      <div class="error">
-        <g:renderErrors bean="${campsiteInstance}" as="list"/>
-      </div>
-    </g:hasErrors>
+  <g:if test="${flash.message}">
+    <div class="success">${flash.message}</div>
+  </g:if>
+  <g:hasErrors bean="${campsiteInstance}">
+    <div class="error">
+      <g:renderErrors bean="${campsiteInstance}" as="list"/>
+    </div>
+  </g:hasErrors>
 
-    <g:form action="save">
-      <fieldset>
-        <p>
-          <label for="name"><g:message code="campsite.name.label" default="Name"/></label><br/>
-          <g:textField name="name" value="${campsiteInstance?.name}" class="text"/>
-        </p>
+  <g:form action="save">
+    <div class="form_settings">
+      <p><span><g:message code="campsite.name.label" default="Name"/></span><g:textField name="name" value="${campsiteInstance?.name}" class="text"/></p>
 
-        <p>
-          <label for="address"><g:message code="campsite.address.label" default="Address"/></label><br/>
-          <g:textField name="address" value="${campsiteInstance?.address}" class="text"/>
-        </p>
+      <p><span><g:message code="campsite.address.label" default="Address"/></span><g:textField name="address" value="${campsiteInstance?.address}" class="text"/></p>
 
-        <p>
-          <label for="latitude"><g:message code="campsite.latitude.label" default="Latitude"/></label><br/>
-          <g:textField name="latitude" value="${campsiteInstance?.latitude}" class="text"/>
-        </p>
+      <p><span><g:message code="campsite.latitude.label" default="Latitude"/></span><g:textField name="latitude" value="${campsiteInstance?.latitude}" class="text"/></p>
 
-        <p>
-          <label for="longitude"><g:message code="campsite.longitude.label" default="Longitude"/></label><br/>
-          <g:textField name="longitude" value="${campsiteInstance?.longitude}" class="text"/>
-        </p>
+      <p><span><g:message code="campsite.longitude.label" default="Longitude"/></span><g:textField name="longitude" value="${campsiteInstance?.longitude}" class="text"/></p>
 
-        <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}"/></span>
-      </fieldset>
-    </g:form>
-  </div>
+      <br/>
+      <p class="buttons"><input class="submit" type="submit" name="create" value="${message(code: 'default.button.create.label', default: 'Create')}"/></p>
+    </div>
+  </g:form>
+</content>
 
-</div>
 </body>
 </html>
