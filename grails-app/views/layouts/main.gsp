@@ -37,16 +37,7 @@
       <div class="sidebar">
         <div class="sidebar_top"></div>
         <div class="sidebar_item">
-          <form method="post" action="#" id="search_form">
-
-            <h3><g:message code="login.heading.label" default="Login"/></h3>
-
-            <div class="sidebar_form_settings">
-              <p><span><g:message code="login.username.label" default="Username"/></span><input type="text" name="username"/></p>
-              <p><span><g:message code="login.password.label" default="Password"/></span><input type="password" name="password"/></p>
-              <p><span>&nbsp;</span><input class="submit" type="submit" name="name" value="${message(code: 'button.login.label', default: 'Login')}"/></p>
-            </div>
-          </form>
+          <g:render template="/loginSidebar"/> 
         </div>
         <div class="sidebar_base"></div>
       </div>
