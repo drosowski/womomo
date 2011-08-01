@@ -104,7 +104,7 @@
 
 <content tag="body">
   <h1><g:message code="campsite.overview.label"/></h1>
-  <div id="map" style="width: 550px; height: 350px"></div>
+  <div id="map" style="width: 600px; height: 400px"></div>
 </content>
 
 </body>
