@@ -30,8 +30,10 @@ grails.project.dependency.resolution = {
     runtime ':excel-import:0.3'
     runtime ':joda-time:1.2'
     runtime ':jquery:1.6.1.1'
+    runtime ':jquery-ui:1.8.11'
     runtime ':avatar:0.5.2'
     runtime ':fckeditor:0.9.5'
+    runtime ':rateable:0.7.0'
   }
   dependencies {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.

@@ -4,6 +4,9 @@ import org.grails.comments.Comment
 import org.grails.comments.CommentLink
 import grails.util.GrailsNameUtils
 import org.grails.comments.CommentException
+import org.grails.rateable.RatingException
+import org.grails.rateable.Rating
+import org.grails.rateable.RatingLink
 
 class CampsiteController {
 
@@ -172,65 +175,123 @@ class CampsiteController {
       redirect(action: "list")
     }
   }
-	def addComment = {
-		def poster = evaluatePoster()
-		def commentLink
-		try {
-			if(params['comment'] instanceof Map) {
-				Comment.withTransaction { status ->
-					def comment = new Comment(params['comment'])
-					comment.posterId = poster.id
-					comment.posterClass = poster.class.name
-					commentLink = new CommentLink(params['commentLink'])
-					commentLink.type = GrailsNameUtils.getPropertyName(commentLink.type)
+  def addComment = {
+    def poster = evaluatePoster()
+    def commentLink
+    try {
+      if (params['comment'] instanceof Map) {
+        Comment.withTransaction { status ->
+          def comment = new Comment(params['comment'])
+          comment.posterId = poster.id
+          comment.posterClass = poster.class.name
+          commentLink = new CommentLink(params['commentLink'])
+          commentLink.type = GrailsNameUtils.getPropertyName(commentLink.type)
 
-					if(!comment.save()) {
-						status.setRollbackOnly()
-					}
-					else {
-						commentLink.comment = comment
-						if(!commentLink.save()) status.setRollbackOnly()
-					}
-				}
-			}
-		}
-		catch(Exception e) {
-			log.error "Error posting comment: ${e.message}"
-		}
+          if (!comment.save()) {
+            status.setRollbackOnly()
+          }
+          else {
+            commentLink.comment = comment
+            if (!commentLink.save()) status.setRollbackOnly()
+          }
+        }
+      }
+    }
+    catch (Exception e) {
+      log.error "Error posting comment: ${e.message}"
+    }
 
-		def comments = CommentLink.withCriteria {
-			projections {
-				property "comment"
-			}
-			eq 'type', commentLink.type
-			eq 'commentRef', commentLink.commentRef
-			cache true
-		}
-		if(request.xhr || params.async) {
-			render template:"comment",
-				   collection:comments,
-				   var:"comment"
-		}
-		else {
-			redirect url:params.commentPageURI
-		}
-	}
+    def comments = CommentLink.withCriteria {
+      projections {
+        property "comment"
+      }
+      eq 'type', commentLink.type
+      eq 'commentRef', commentLink.commentRef
+      cache true
+    }
+    if (request.xhr || params.async) {
+      render template: "comment",
+              collection: comments,
+              var: "comment"
+    }
+    else {
+      redirect url: params.commentPageURI
+    }
+  }
 
-	def evaluatePoster() {
-		def evaluator = grailsApplication.config.grails.commentable.poster.evaluator
-		def poster
-		if(evaluator instanceof Closure) {
-			evaluator.delegate = this
-			evaluator.resolveStrategy = Closure.DELEGATE_ONLY
-			poster = evaluator.call()
-		}
+  def evaluatePoster() {
+    def evaluator = grailsApplication.config.grails.commentable.poster.evaluator
+    def poster
+    if (evaluator instanceof Closure) {
+      evaluator.delegate = this
+      evaluator.resolveStrategy = Closure.DELEGATE_ONLY
+      poster = evaluator.call()
+    }
 
-		if(!poster) {
-			throw new CommentException("No [grails.commentable.poster.evaluator] setting defined or the evaluator doesn't evaluate to an entity. Please define the evaluator correctly in grails-app/conf/Config.groovy or ensure commenting is secured via your security rules")
-		}
-		if(!poster.id) {
-			throw new CommentException("The evaluated Comment poster is not a persistent instance.")
-		}
-		return poster
-	}
+    if (!poster) {
+      throw new CommentException("No [grails.commentable.poster.evaluator] setting defined or the evaluator doesn't evaluate to an entity. Please define the evaluator correctly in grails-app/conf/Config.groovy or ensure commenting is secured via your security rules")
+    }
+    if (!poster.id) {
+      throw new CommentException("The evaluated Comment poster is not a persistent instance.")
+    }
+    return poster
+  }
+
+  def rate = {
+    def rater = evaluateRater()
+
+    // for an existing rating, update it
+    def rating = RatingLink.createCriteria().get {
+      createAlias("rating", "r")
+      projections {
+        property "rating"
+      }
+      eq "ratingRef", params.id.toLong()
+      eq "type", params.type
+      eq "r.raterId", rater.id.toLong()
+      cache true
+    }
+    if (rating) {
+      rating.stars = params.rating.toDouble()
+      assert rating.save()
+    }
+    // create a new one otherwise
+    else {
+      // create Rating
+      rating = new Rating(stars: params.rating, raterId: rater.id, raterClass: rater.class.name)
+      assert rating.save()
+      def link = new RatingLink(rating: rating, ratingRef: params.id, type: params.type)
+      assert link.save()
+    }
+
+    def allRatings = RatingLink.withCriteria {
+      projections {
+        property 'rating'
+      }
+      eq "ratingRef", params.id.toLong()
+      eq "type", params.type
+      cache true
+    }
+    def avg = allRatings.size() ? allRatings*.stars.sum() / allRatings.size() : 0
+
+    render "${avg},${allRatings.size()}"
+  }
+
+  def evaluateRater() {
+    def evaluator = grailsApplication.config.grails.rateable.rater.evaluator
+    def rater
+    if (evaluator instanceof Closure) {
+      evaluator.delegate = this
+      evaluator.resolveStrategy = Closure.DELEGATE_ONLY
+      rater = evaluator.call()
+    }
+
+    if (!rater) {
+      throw new RatingException("No [grails.rateable.rater.evaluator] setting defined or the evaluator doesn't evaluate to an entity. Please define the evaluator correctly in grails-app/conf/Config.groovy or ensure rating is secured via your security rules")
+    }
+    if (!rater.id) {
+      throw new RatingException("The evaluated Rating rater is not a persistent instance.")
+    }
+    return rater
+  }
 }

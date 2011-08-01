@@ -122,3 +122,4 @@ grails.plugins.springsecurity.interceptUrlMap = [
 ]
 
 grails.commentable.poster.evaluator = { de.womomo.UserAccount.get(principal.id) }
+grails.rateable.rater.evaluator = { de.womomo.UserAccount.get(principal.id) }

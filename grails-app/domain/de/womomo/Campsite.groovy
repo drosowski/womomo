@@ -1,8 +1,9 @@
 package de.womomo
 
 import org.grails.comments.*
+import org.grails.rateable.*
 
-class Campsite implements Commentable {
+class Campsite implements Commentable, Rateable {
 
   String name
   String address

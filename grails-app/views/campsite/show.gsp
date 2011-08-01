@@ -1,10 +1,13 @@
-<%@ page import="de.womomo.Campsite" %>
+<%@ page import="grails.util.GrailsNameUtils; de.womomo.Campsite" %>
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="layout" content="main"/>
   <g:set var="entityName" value="${message(code: 'campsite.label', default: 'Campsite')}"/>
   <title><g:message code="default.show.label" args="[entityName]"/></title>
+  <jqui:resources/>
+  <link rel="stylesheet" href="${resource(dir: 'js/stars', file: 'jquery.ui.stars.min.css')}"/>
+  <g:javascript src="stars/jquery.ui.stars.min.js"/>
   <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
   <script type="text/javascript">
     function initMap() {
@@ -25,7 +28,15 @@
   </script>
 </head>
 <body>
-<content tag="sidebar"></content>
+<content tag="sidebar">
+  <div class="sidebar">
+    <div class="sidebar_top"></div>
+    <div class="sidebar_item">
+      <g:render template="ratings" model="${pageScope.variables}"/> 
+    </div>
+    <div class="sidebar_base"></div>
+  </div>
+</content>
 
 <content tag="body">
 
