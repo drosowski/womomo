@@ -3,6 +3,7 @@ package de.womomo
 class UserAccount {
 
 	String username
+	String email
 	String password
 	boolean enabled = true
 	boolean accountExpired = false
@@ -10,8 +11,9 @@ class UserAccount {
 	boolean passwordExpired = false
 
 	static constraints = {
-		username blank: false, unique: true
-		password blank: false
+		username(blank: false, unique: true)
+		email(email: true)
+		password(blank: false)
 	}
 
 	static mapping = {
