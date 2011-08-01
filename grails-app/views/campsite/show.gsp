@@ -32,7 +32,7 @@
   <h1><g:message code="campsite.label" default="Campsite"/></h1>
   <h2>${campsiteInstance.name}</h2>
 
-  <div id="map" style="width: 500px; height: 300px"></div>
+  <div id="map" style="width: 600px; height: 400px"></div>
   <br/>
 
   <h2><g:message code="campsite.details.label" default="Campsite details"/></h2>
@@ -78,32 +78,8 @@
     </tr>
   </table>
 
-  <div id="comments">
-    <g:message code="campsite.comments.label" default="Comments"/><br/>
-    <table>
-      <comments:each bean="${campsiteInstance}">
-        <tr>
-          <td valign="top" class="name">${comment.poster.username}</td>
-          <td valign="top" class="value"><g:textArea name="comment" value="${comment.body}" disabled="disabled"/></td>
-        </tr>
-      </comments:each>
-    </table>
-
-    <sec:ifLoggedIn>
-      <g:form>
-        <g:hiddenField name="id" value="${campsiteInstance?.id}"/>
-        <tr class="prop">
-          <td valign="top" class="name">
-            <label for="comment"><g:message code="campsite.newComment.label" default="New comment"/></label>
-          </td>
-          <td valign="top" class="value">
-            <g:textArea name="comment"/><br/>
-            <span class="button"><g:actionSubmit action="addComment" value="${message(code: 'button.addComment.label', default: 'Add comment')}"/></span>
-          </td>
-        </tr>
-      </g:form>
-    </sec:ifLoggedIn>
-  </div>
+  <h2><g:message code="campsite.comments.label" default="Comments"/></h2>
+  <g:render template="comments" model="['commentable': campsiteInstance]"/>
 </content>
 
 </body>

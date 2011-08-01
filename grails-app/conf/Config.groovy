@@ -15,19 +15,19 @@ import grails.plugins.springsecurity.SecurityConfigType
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
-grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
-                      xml: ['text/xml', 'application/xml'],
-                      text: 'text/plain',
-                      js: 'text/javascript',
-                      rss: 'application/rss+xml',
-                      atom: 'application/atom+xml',
-                      css: 'text/css',
-                      csv: 'text/csv',
-                      all: '*/*',
-                      json: ['application/json','text/json'],
-                      form: 'application/x-www-form-urlencoded',
-                      multipartForm: 'multipart/form-data'
-                    ]
+grails.mime.types = [html: ['text/html', 'application/xhtml+xml'],
+        xml: ['text/xml', 'application/xml'],
+        text: 'text/plain',
+        js: 'text/javascript',
+        rss: 'application/rss+xml',
+        atom: 'application/atom+xml',
+        css: 'text/css',
+        csv: 'text/csv',
+        all: '*/*',
+        json: ['application/json', 'text/json'],
+        form: 'application/x-www-form-urlencoded',
+        multipartForm: 'multipart/form-data'
+]
 
 // URL Mapping Cache Max Size, defaults to 5000
 //grails.urlmapping.cache.maxsize = 1000
@@ -55,54 +55,54 @@ grails.exceptionresolver.params.exclude = ['password']
 
 // set per-environment serverURL stem for creating absolute links
 environments {
-    production {
-        grails.serverURL = "http://www.changeme.com"
-    }
-    development {
-        grails.serverURL = "http://localhost:8080/${appName}"
-    }
-    test {
-        grails.serverURL = "http://localhost:8080/${appName}"
-    }
+  production {
+    grails.serverURL = "http://www.changeme.com"
+  }
+  development {
+    grails.serverURL = "http://localhost:8080/${appName}"
+  }
+  test {
+    grails.serverURL = "http://localhost:8080/${appName}"
+  }
 
 }
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console
-    // appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+  // Example of changing the log pattern for the default console
+  // appender:
+  //
+  //appenders {
+  //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+  //}
 
-    error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
-           'org.codehaus.groovy.grails.web.pages', //  GSP
-           'org.codehaus.groovy.grails.web.sitemesh', //  layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping', // URL mapping
-           'org.codehaus.groovy.grails.commons', // core / classloading
-           'org.codehaus.groovy.grails.plugins', // plugins
-           'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+  error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
+          'org.codehaus.groovy.grails.web.pages', //  GSP
+          'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+          'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+          'org.codehaus.groovy.grails.web.mapping', // URL mapping
+          'org.codehaus.groovy.grails.commons', // core / classloading
+          'org.codehaus.groovy.grails.plugins', // plugins
+          'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+          'org.springframework',
+          'org.hibernate',
+          'net.sf.ehcache.hibernate'
 
-    warn   'org.mortbay.log'
+  warn 'org.mortbay.log'
 }
 
-grails.views.javascript.library="jquery"
+grails.views.javascript.library = "jquery"
 
 // Added by the Joda-Time plugin:
 grails.gorm.default.mapping = {
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentDateTime, class: org.joda.time.DateTime
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentDuration, class: org.joda.time.Duration
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentInstant, class: org.joda.time.Instant
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentInterval, class: org.joda.time.Interval
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentLocalDate, class: org.joda.time.LocalDate
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentLocalTimeAsString, class: org.joda.time.LocalTime
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentLocalDateTime, class: org.joda.time.LocalDateTime
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentPeriod, class: org.joda.time.Period
+  "user-type" type: org.joda.time.contrib.hibernate.PersistentDateTime, class: org.joda.time.DateTime
+  "user-type" type: org.joda.time.contrib.hibernate.PersistentDuration, class: org.joda.time.Duration
+  "user-type" type: org.joda.time.contrib.hibernate.PersistentInstant, class: org.joda.time.Instant
+  "user-type" type: org.joda.time.contrib.hibernate.PersistentInterval, class: org.joda.time.Interval
+  "user-type" type: org.joda.time.contrib.hibernate.PersistentLocalDate, class: org.joda.time.LocalDate
+  "user-type" type: org.joda.time.contrib.hibernate.PersistentLocalTimeAsString, class: org.joda.time.LocalTime
+  "user-type" type: org.joda.time.contrib.hibernate.PersistentLocalDateTime, class: org.joda.time.LocalDateTime
+  "user-type" type: org.joda.time.contrib.hibernate.PersistentPeriod, class: org.joda.time.Period
 }
 
 // Added by the Spring Security Core plugin:
@@ -112,11 +112,13 @@ grails.plugins.springsecurity.authority.className = 'de.womomo.Role'
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = [
-   '/js/**':        ['IS_AUTHENTICATED_ANONYMOUSLY'],
-   '/css/**':       ['IS_AUTHENTICATED_ANONYMOUSLY'],
-   '/images/**':    ['IS_AUTHENTICATED_ANONYMOUSLY'],
-   '/*':            ['IS_AUTHENTICATED_ANONYMOUSLY'],
-   '/login/**':     ['IS_AUTHENTICATED_ANONYMOUSLY'],
-   '/logout/**':    ['IS_AUTHENTICATED_ANONYMOUSLY'],
-   '/campsite/addComment':     ['IS_AUTHENTICATED_REMEMBERED']
+        '/js/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/css/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/images/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/*': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/login/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/logout/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/commentable/add': ['IS_AUTHENTICATED_REMEMBERED']
 ]
+
+grails.commentable.poster.evaluator = { de.womomo.UserAccount.get(principal.id) }

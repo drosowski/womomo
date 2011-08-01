@@ -24,12 +24,14 @@ grails.project.dependency.resolution = {
     //mavenRepo "http://repository.jboss.com/maven2/"
   }
   plugins {
-    runtime ':spring-security-core:1.1.3'
+    runtime ':spring-security-core:1.2'
     runtime ':commentable:0.7.5'
     runtime ':searchable:0.6.1'
     runtime ':excel-import:0.3'
     runtime ':joda-time:1.2'
     runtime ':jquery:1.6.1.1'
+    runtime ':avatar:0.5.2'
+    runtime ':fckeditor:0.9.5'
   }
   dependencies {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.

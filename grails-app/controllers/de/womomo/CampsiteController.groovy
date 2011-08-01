@@ -1,5 +1,10 @@
 package de.womomo
 
+import org.grails.comments.Comment
+import org.grails.comments.CommentLink
+import grails.util.GrailsNameUtils
+import org.grails.comments.CommentException
+
 class CampsiteController {
 
   def campsiteService
@@ -167,24 +172,65 @@ class CampsiteController {
       redirect(action: "list")
     }
   }
+	def addComment = {
+		def poster = evaluatePoster()
+		def commentLink
+		try {
+			if(params['comment'] instanceof Map) {
+				Comment.withTransaction { status ->
+					def comment = new Comment(params['comment'])
+					comment.posterId = poster.id
+					comment.posterClass = poster.class.name
+					commentLink = new CommentLink(params['commentLink'])
+					commentLink.type = GrailsNameUtils.getPropertyName(commentLink.type)
 
-  def addComment = {
-    def campsiteInstance = Campsite.get(params.id)
-    if (campsiteInstance) {
-      def user = springSecurityService.currentUser
-      campsiteInstance.addComment(user, params.comment)
-      if (campsiteInstance.save(flush: true)) {
-        flash.message = "${message(code: 'campsite.comment.created')}"
-        redirect(action: "show", id: campsiteInstance.id)
-      }
-      else {
-        flash.message = "${message(code: 'campsite.comment.error')}"
-        redirect(view: "show", id: params.id)
-      }
-    }
-    else {
-      flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'campsite.label', default: 'Campsite'), params.id])}"
-      redirect(action: "list")
-    }
-  }
+					if(!comment.save()) {
+						status.setRollbackOnly()
+					}
+					else {
+						commentLink.comment = comment
+						if(!commentLink.save()) status.setRollbackOnly()
+					}
+				}
+			}
+		}
+		catch(Exception e) {
+			log.error "Error posting comment: ${e.message}"
+		}
+
+		def comments = CommentLink.withCriteria {
+			projections {
+				property "comment"
+			}
+			eq 'type', commentLink.type
+			eq 'commentRef', commentLink.commentRef
+			cache true
+		}
+		if(request.xhr || params.async) {
+			render template:"comment",
+				   collection:comments,
+				   var:"comment"
+		}
+		else {
+			redirect url:params.commentPageURI
+		}
+	}
+
+	def evaluatePoster() {
+		def evaluator = grailsApplication.config.grails.commentable.poster.evaluator
+		def poster
+		if(evaluator instanceof Closure) {
+			evaluator.delegate = this
+			evaluator.resolveStrategy = Closure.DELEGATE_ONLY
+			poster = evaluator.call()
+		}
+
+		if(!poster) {
+			throw new CommentException("No [grails.commentable.poster.evaluator] setting defined or the evaluator doesn't evaluate to an entity. Please define the evaluator correctly in grails-app/conf/Config.groovy or ensure commenting is secured via your security rules")
+		}
+		if(!poster.id) {
+			throw new CommentException("The evaluated Comment poster is not a persistent instance.")
+		}
+		return poster
+	}
 }
