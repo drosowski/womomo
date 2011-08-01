@@ -91,7 +91,7 @@
   </g:form>
   <br/>
 
-  <div id="map" style="width: 500px; height: 300px"></div>
+  <div id="map" style="width: 600px; height: 400px"></div>
 </content>
 </body>
 </html>
