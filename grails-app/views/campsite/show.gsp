@@ -31,8 +31,8 @@
 <content tag="sidebar">
   <div class="sidebar">
     <div class="sidebar_top"></div>
-    <div class="sidebar_item">
-      <g:render template="ratings" model="${pageScope.variables}"/> 
+    <div class="sidebar_item" id="rating_sidebar">
+      <g:render template="ratings" model="${pageScope.variables}"/>
     </div>
     <div class="sidebar_base"></div>
   </div>

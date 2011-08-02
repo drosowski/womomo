@@ -10,6 +10,7 @@ class BootStrap {
   def init = { servletContext ->
     def daniel = new UserAccount(username: "daniel", password: springSecurityService.encodePassword("qwert"), email: "daniel@test.de")
     daniel.save()
+    new UserAccount(username: "horst", password: springSecurityService.encodePassword("qwert"), email: "horst@test.de").save()
 
     def campsite = new Campsite(name: "foobar", latitude: 49.075, longitude: 13.079)
     campsite = campsiteService.setGeolocationData(campsite)

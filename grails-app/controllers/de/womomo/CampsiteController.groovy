@@ -253,15 +253,15 @@ class CampsiteController {
     }
     if (rating) {
       rating.stars = params.rating.toDouble()
-      assert rating.save()
+      assert rating.save(flush: true)
     }
     // create a new one otherwise
     else {
       // create Rating
       rating = new Rating(stars: params.rating, raterId: rater.id, raterClass: rater.class.name)
-      assert rating.save()
+      assert rating.save(flush: true)
       def link = new RatingLink(rating: rating, ratingRef: params.id, type: params.type)
-      assert link.save()
+      assert link.save(flush: true)
     }
 
     def allRatings = RatingLink.withCriteria {
@@ -274,7 +274,7 @@ class CampsiteController {
     }
     def avg = allRatings.size() ? allRatings*.stars.sum() / allRatings.size() : 0
 
-    render "${avg},${allRatings.size()}"
+    render(template: "ratings", model: [campsiteInstance: Campsite.get(params.id.toLong())])
   }
 
   def evaluateRater() {
