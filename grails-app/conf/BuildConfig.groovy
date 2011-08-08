@@ -34,6 +34,10 @@ grails.project.dependency.resolution = {
     runtime ':avatar:0.5.2'
     runtime ':fckeditor:0.9.5'
     runtime ':rateable:0.7.0'
+    runtime ':famfamfam:1.0.1'
+    runtime ':mail:1.0-SNAPSHOT'
+    runtime ':greenmail:1.2.2'
+    runtime ':spring-security-ui:0.1.2'
   }
   dependencies {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
