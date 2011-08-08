@@ -59,6 +59,7 @@ environments {
     grails.serverURL = "http://www.changeme.com"
   }
   development {
+    grails.mail.port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
     grails.serverURL = "http://localhost:8080/${appName}"
   }
   test {
@@ -112,12 +113,6 @@ grails.plugins.springsecurity.authority.className = 'de.womomo.Role'
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = [
-        '/js/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-        '/css/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-        '/images/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-        '/*': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-        '/login/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-        '/logout/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
         '/commentable/add': ['IS_AUTHENTICATED_REMEMBERED']
 ]
 
