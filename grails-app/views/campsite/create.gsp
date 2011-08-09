@@ -13,9 +13,6 @@
 
   <h1><g:message code="default.create.label" args="[entityName]"/></h1>
 
-  <g:if test="${flash.message}">
-    <div class="success">${flash.message}</div>
-  </g:if>
   <g:hasErrors bean="${campsiteInstance}">
     <div class="error">
       <g:renderErrors bean="${campsiteInstance}" as="list"/>

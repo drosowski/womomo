@@ -55,10 +55,6 @@
 
   <h1><g:message code="route.calculate.label"/></h1>
 
-  <g:if test="${flash.message}">
-    <div class="message">${flash.message}</div>
-  </g:if>
-
   <g:form action="calculateRoute">
     <div class="form_settings">
 

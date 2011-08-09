@@ -21,11 +21,20 @@
     </div>
     <div id="menubar">
       <ul id="menu">
-        <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-        <li><a href="${createLink(uri: "/")}"><g:message code="topnav.overview.label" default="Overview"/></a></li>
-        <li><a href="${createLink(controller: "campsite", action: "create")}"><g:message code="topnav.add_campsite.label" default="Add Campsite"/></a></li>
-        <li><a href="${createLink(controller: "route")}"><g:message code="topnav.route.label" default="Route"/></a></li>
-        <li><a href="${createLink(uri: "/")}"><g:message code="topnav.myprofile.label" default="My Profile"/></a></li>
+        <g:set var="currentPath" value="${request.forwardURI}"/>
+
+        <%-- put class="selected" in the li tag for the selected page - to highlight which page you're on --%>
+        <g:set var="linkOverview">${g.createLink(uri: "/")}</g:set>
+        <li <g:if test="${currentPath == linkOverview.toString()}">class="selected"</g:if>><a href="${linkOverview}"><g:message code="topnav.overview.label" default="Overview"/></a></li>
+
+        <g:set var="linkRoute">${g.createLink(controller: "route", action: "route")}</g:set>
+        <li <g:if test="${currentPath == linkRoute.toString()}">class="selected"</g:if>><a href="${linkRoute}"><g:message code="topnav.route.label" default="Route"/></a></li>
+
+        <g:set var="linkCreate">${g.createLink(controller: "campsite", action: "create")}</g:set>
+        <li <g:if test="${currentPath.equals(linkCreate.toString())}">class="selected"</g:if>><a href="${linkCreate}"><g:message code="topnav.add_campsite.label" default="Add Campsite"/></a></li>
+
+        <g:set var="linkProfile">${g.createLink(uri: "/user/profile")}</g:set>
+        <li <g:if test="${currentPath == linkProfile.toString()}">class="selected"</g:if>><a href="${createLink(uri: "/user/profile")}"><g:message code="topnav.myprofile.label" default="My Profile"/></a></li>
       </ul>
     </div>
   </div>
@@ -37,7 +46,7 @@
       <div class="sidebar">
         <div class="sidebar_top"></div>
         <div class="sidebar_item">
-          <g:render template="/loginSidebar"/> 
+          <g:render template="/loginSidebar"/>
         </div>
         <div class="sidebar_base"></div>
       </div>
@@ -45,6 +54,12 @@
     </div>
 
     <div id="content">
+      <g:if test="${flash.message}">
+        <div class="success">
+          <ul><li>${flash.message}</li></ul>
+        </div>
+      </g:if>
+
       <g:pageProperty name="page.body"/>
     </div>
   </div>
