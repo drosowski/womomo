@@ -1,5 +1,11 @@
 <sec:ifLoggedIn>
-  Logged in!
+  <h3><g:message code="login.welcome.label" default="Welcome"/>!</h3>
+  <strong><sec:username/></strong><br/>
+  <br/>
+  <ul>
+    <li><a href="${createLink(controller: "user", action: "profile")}"><g:message code="login.profile.label"/></a></li>
+    <li><a href="${createLink(controller: "logout")}"><g:message code="login.logout.label"/></a></li>
+  </ul>
 </sec:ifLoggedIn>
 <sec:ifNotLoggedIn>
   <form method="post" action="${request.contextPath}/j_spring_security_check">
