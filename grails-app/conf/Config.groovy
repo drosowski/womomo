@@ -118,3 +118,7 @@ grails.plugins.springsecurity.interceptUrlMap = [
 
 grails.commentable.poster.evaluator = { de.womomo.UserAccount.get(principal.id) }
 grails.rateable.rater.evaluator = { de.womomo.UserAccount.get(principal.id) }
+
+grails.plugins.springsecurity.ui.register.emailBody = '''Hallo $user.username,<br/><br/>Sie (oder jemand der sich als Sie ausgibt) haben ein Benutzerkonto auf womomo.de angelegt. Klicken Sie <a href='$url'>hier</a> um die Registrierung abzuschliessen.'''
+grails.plugins.springsecurity.ui.register.emailFrom = 'registration@womomo.de'
+grails.plugins.springsecurity.ui.register.emailSubject = 'Willkommen bei womomo.de'
