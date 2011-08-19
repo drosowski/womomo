@@ -1,5 +1,7 @@
 import de.womomo.Campsite
 import de.womomo.UserAccount
+import de.womomo.Role
+import de.womomo.UserAccountRole
 
 class BootStrap {
 
@@ -8,8 +10,13 @@ class BootStrap {
   def springSecurityService
 
   def init = { servletContext ->
+    def adminRole = new Role(authority: "ROLE_ADMIN")
+    adminRole.save()
+
     def daniel = new UserAccount(username: "daniel", password: springSecurityService.encodePassword("qwert"), email: "daniel@test.de")
     daniel.save()
+    UserAccountRole.create(daniel, adminRole)
+
     new UserAccount(username: "horst", password: springSecurityService.encodePassword("qwert"), email: "horst@test.de").save()
 
     def campsite = new Campsite(name: "foobar", latitude: 49.075, longitude: 13.079)
