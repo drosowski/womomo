@@ -7,17 +7,16 @@ class BootStrap {
 
   def excelService
   def campsiteService
-  def springSecurityService
 
   def init = { servletContext ->
     def adminRole = new Role(authority: "ROLE_ADMIN")
     adminRole.save()
 
-    def daniel = new UserAccount(username: "daniel", password: springSecurityService.encodePassword("qwert"), email: "daniel@test.de")
+    def daniel = new UserAccount(username: "daniel", password: "qwert", password2: "qwert", email: "daniel@test.de")
     daniel.save()
     UserAccountRole.create(daniel, adminRole)
 
-    new UserAccount(username: "horst", password: springSecurityService.encodePassword("qwert"), email: "horst@test.de").save()
+    new UserAccount(username: "horst", password: "qwert", password2: "qwert", email: "horst@test.de").save()
 
     def campsite = new Campsite(name: "foobar", latitude: 49.075, longitude: 13.079)
     campsite = campsiteService.setGeolocationData(campsite)
