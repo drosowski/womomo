@@ -32,9 +32,6 @@
 
         <g:set var="linkCreate">${g.createLink(controller: "campsite", action: "create")}</g:set>
         <li <g:if test="${currentPath.equals(linkCreate.toString())}">class="selected"</g:if>><a href="${linkCreate}"><g:message code="topnav.add_campsite.label" default="Add Campsite"/></a></li>
-
-        <g:set var="linkProfile">${g.createLink(uri: "/user/profile")}</g:set>
-        <li <g:if test="${currentPath == linkProfile.toString()}">class="selected"</g:if>><a href="${createLink(uri: "/user/profile")}"><g:message code="topnav.myprofile.label" default="My Profile"/></a></li>
       </ul>
     </div>
   </div>

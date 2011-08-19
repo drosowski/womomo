@@ -28,11 +28,11 @@
     <g:else>
 
       <div class="form_settings">
-        <p><span><g:message code="register.username.label" default="Username"/></span><g:textField name="username" value="${command?.username}" class="text"/></p>
+        <p><span><g:message code="userAccount.username.label" default="Username"/></span><g:textField name="username" value="${command?.username}" class="text"/></p>
 
-        <p><span><g:message code="register.email.label" default="E-Mail"/></span><g:textField name="email" value="${command?.email}" class="text"/></p>
+        <p><span><g:message code="userAccount.email.label" default="E-Mail"/></span><g:textField name="email" value="${command?.email}" class="text"/></p>
 
-        <p><span><g:message code="register.password.label" default="Password"/></span><g:passwordField name="password" value="${command?.password}" class="text"/></p>
+        <p><span><g:message code="userAccount.password.label" default="Password"/></span><g:passwordField name="password" value="${command?.password}" class="text"/></p>
 
         <p><span><g:message code="register.password2.label" default="Repeat password"/></span><g:passwordField name="password2" value="${command?.password2}" class="text"/></p>
 

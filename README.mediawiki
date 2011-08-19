@@ -1,0 +1,15 @@
+==Was ist womomo.de?==
+Womomo.de ist eine kostenlose Community für Wohnmobilfahrer bei der Stellplätze ausgetauscht, bewertet und kommentiert werden können.
+
+==Was kann ich auf womomo.de machen?==
+Wenn du dich bei womomo.de registrierst, kannst du
+* neue Stellplätze hinzufügen
+* eingestellte Stellplätze bewerten
+* eingestellte Stellplätze kommentieren
+* nach Stellplätzen suchen
+* nach Stellplätzen an deiner geplanten Route suchen
+
+==Wird womomo.de noch erweitert?==
+Immer wenn ich Zeit habe, werde ich weitere Funktionen hinzufügen. Geplant sind unter anderem
+* ein Forum
+* Export der Stellplätze in gängige Navi-Formate
