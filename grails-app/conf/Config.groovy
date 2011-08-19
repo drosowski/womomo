@@ -113,7 +113,12 @@ grails.plugins.springsecurity.authority.className = 'de.womomo.Role'
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = [
-        '/commentable/add': ['IS_AUTHENTICATED_REMEMBERED']
+        '/commentable/add': ['IS_AUTHENTICATED_REMEMBERED'],
+        '/user/profile': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/user/*': ['ROLE_ADMIN'],
+        '/role/*': ['ROLE_ADMIN'],
+        '/registrationCode/*': ['ROLE_ADMIN'],
+        '/securityInfo/*': ['ROLE_ADMIN']
 ]
 
 grails.commentable.poster.evaluator = { de.womomo.UserAccount.get(principal.id) }
