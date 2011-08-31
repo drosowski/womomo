@@ -13,3 +13,4 @@ Wenn du dich bei womomo.de registrierst, kannst du
 Immer wenn ich Zeit habe, werde ich weitere Funktionen hinzufügen. Geplant sind unter anderem
 * ein Forum
 * Export der Stellplätze in gängige Navi-Formate
+* Anwender selber administrieren lassen
