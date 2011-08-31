@@ -113,6 +113,8 @@ grails.plugins.springsecurity.authority.className = 'de.womomo.Role'
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = [
+        '/campsite/show': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/campsite/*': ['IS_AUTHENTICATED_REMEMBERED'],
         '/commentable/add': ['IS_AUTHENTICATED_REMEMBERED'],
         '/user/profile': ['IS_AUTHENTICATED_ANONYMOUSLY'],
         '/user/*': ['ROLE_ADMIN'],
