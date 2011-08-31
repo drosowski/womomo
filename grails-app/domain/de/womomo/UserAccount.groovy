@@ -2,6 +2,8 @@ package de.womomo
 
 class UserAccount {
 
+  def springSecurityService
+
   String username
   String email
   String password
@@ -11,7 +13,7 @@ class UserAccount {
   boolean accountLocked = false
   boolean passwordExpired = false
 
-  static transients = ['password2']
+  static transients = ['password2', 'springSecurityService']
 
   static constraints = {
     username(blank: false, unique: true)
@@ -31,6 +33,27 @@ class UserAccount {
 
   static mapping = {
     password column: '`password`'
+  }
+
+  def beforeInsert = {
+    encodePassword()
+  }
+
+  def beforeUpdate = {
+    encodePassword()
+  }
+
+  /**
+   * Encode password using springSecurityService, only if both password and passwordVerification have been supplied.
+   */
+  void encodePassword() {
+    // only encode password if it has been reset
+    if (this.password && this.password2) {
+      this.password = springSecurityService.encodePassword(this.password)
+
+      // reset password verification so we don't accidentally re-encode password on udpate
+      this.password2 = null
+    }
   }
 
   Set<Role> getAuthorities() {
