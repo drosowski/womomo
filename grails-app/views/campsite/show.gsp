@@ -46,6 +46,8 @@
   <div id="map" style="width: 600px; height: 400px"></div>
   <br/>
 
+  <hr/>
+  
   <h2><g:message code="campsite.details.label" default="Campsite details"/></h2>
   <table style="width:100%; border-spacing:0;">
     <tr>
@@ -87,6 +89,27 @@
       <td><g:message code="campsite.longitude.label" default="Longitude"/></td>
       <td>${fieldValue(bean: campsiteInstance, field: "longitude")}</td>
     </tr>
+
+    <tr>
+      <td><g:message code="campsite.contact.label" default="Contact (website, email, phone, ...)"/></td>
+      <td>${campsiteInstance?.contact}</td>
+    </tr>
+
+    <tr>
+      <td><g:message code="campsite.remarks.label" default="Remarks"/></td>
+      <td>${campsiteInstance?.remarks}</td>
+    </tr>
+
+    <tr>
+      <td><g:message code="campsite.power.label" default="Power"/></td>
+      <td><g:formatBoolean boolean="${campsiteInstance?.power}"/></td>
+    </tr>
+
+    <tr>
+      <td><g:message code="campsite.ve.label" default="Disposal"/></td>
+      <td><g:formatBoolean boolean="${campsiteInstance?.ve}"/></td>
+    </tr>
+
   </table>
 
   <h2><g:message code="campsite.comments.label" default="Comments"/></h2>

@@ -3,7 +3,6 @@
     <a href="#comment_${comment.id}" name="comment_${comment.id}">
       ${comment?.poster.username}, <g:formatDate date="${comment.dateCreated}" format="dd.MM.yyyy HH:mm"/>
     </a>
-  </div>
 
     <plugin:isAvailable name="avatar">
       <span class="left">

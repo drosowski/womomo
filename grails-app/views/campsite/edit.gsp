@@ -32,6 +32,32 @@
 
       <p><span><g:message code="campsite.name.label" default="Name"/></span><g:textField name="name" value="${campsiteInstance?.name}"/></p>
 
+      <hr/>
+
+      <p>
+        <span><g:message code="campsite.contact.label" default="Contact (website, email, phone, ...)"/></span>
+        <fckeditor:config EnterMode="br"/>
+        <fckeditor:editor
+                name="contact"
+                width="100%"
+                height="200"
+                toolbar="Basic">${campsiteInstance?.contact}</fckeditor:editor>
+      </p>
+
+      <p>
+        <span><g:message code="campsite.remarks.label" default="Remarks"/></span>
+        <fckeditor:config EnterMode="br"/>
+        <fckeditor:editor
+                name="remarks"
+                width="100%"
+                height="200"
+                toolbar="Basic">${campsiteInstance?.remarks}</fckeditor:editor>
+      </p>
+
+      <p><span><g:message code="campsite.power.label" default="Power"/></span><g:checkBox name="power" value="${campsiteInstance?.power}" class="checkbox" /></p>
+
+      <p><span><g:message code="campsite.ve.label" default="Disposal"/></span><g:checkBox name="ve" value="${campsiteInstance?.ve}" class="checkbox" /></p>
+
       <br/>
       <p class="buttons"><g:actionSubmit class="submit" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}"/>&nbsp;<g:actionSubmit class="submit" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></p>
     </div>
