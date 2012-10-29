@@ -1,36 +1,33 @@
 package de.womomo
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
-import org.grails.plugins.excelimport.ExcelImportUtils
 
 class ExcelService {
 
-  static transactional = true
+    def importCampsites() {
+        HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream("data/bordatlas2008.xls"))
 
-  def importCampsites() {
-    Map columnMap = [
-            sheet: 'BORDATLAS',
-            startRow: 2,
-            columnMap: [
-                    'B': 'longitude',
-                    'C': 'latitude',
-                    'D': 'name'
-            ]
-    ]
+        def sheet = workbook.getSheet("BORDATLAS")
 
-    HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream("data/bordatlas2008.xls"))
-    List result = ExcelImportUtils.convertColumnMapConfigManyRows(workbook, columnMap)
-    result.each { Map row ->
-      try {
-        def campsite = new Campsite()
-        campsite.name = row.name.replace("\"", "")
-        campsite.latitude = (row.latitude instanceof String ? row.latitude.trim().toDouble() : row.latitude)
-        campsite.longitude = (row.longitude instanceof String ? row.longitude.trim().toDouble() : row.longitude)
-        campsite.save()
-      }
-      catch (NumberFormatException ex) {
-        // ignore for now
-      }
+        int rowNum = 1
+        def row = sheet.getRow(rowNum)
+        while (row) {
+            try {
+                def campsite = new Campsite()
+
+                def cell = row.getCell(1)
+                campsite.longitude = cell.getNumericCellValue()
+                cell = row.getCell(2)
+                campsite.latitude = cell.getNumericCellValue()
+                cell = row.getCell(3)
+                campsite.name = cell.getStringCellValue()?.replace("\"", "")
+                campsite.save()
+            }
+            catch (NumberFormatException ex) {
+                // ignore for now
+            }
+
+            row = sheet.getRow(++rowNum)
+        }
     }
-  }
 }
